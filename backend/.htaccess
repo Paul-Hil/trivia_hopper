@@ -1,7 +1,5 @@
 # Fichier de configuration du serveur Web Apache
-
 RewriteEngine On
-
 # dynamically setup base URI
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
 RewriteRule ^(.*) - [E=BASE_URI:%1]

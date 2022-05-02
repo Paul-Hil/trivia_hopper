@@ -1,13 +1,22 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import HomePage from '@/views/HomePage.vue'
+import GamePage from '@/views/GamePage.vue'
 import App from './App.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomePage
+    component: HomePage,
+  },
+  {
+    path: '/game',
+    name: 'game',
+    component: GamePage
   },
 ]
 
@@ -16,5 +25,5 @@ const router = createRouter({
   routes
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router, VueAxios, axios).mount('#app')
 

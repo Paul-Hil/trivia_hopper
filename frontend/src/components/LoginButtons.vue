@@ -77,10 +77,12 @@ function getInfosDiscord(accessToken) {
         </a>
 
         <a v-else>
-            <button
-            @click="handleConnectionDiscord(false)"
-                >Disconnect from Discord
-            </button>
+            <router-link to="/">
+                <button
+                    @click="handleConnectionDiscord(false)"
+                    >Disconnect from Discord
+                </button>
+            </router-link>
         </a>
 
         <button

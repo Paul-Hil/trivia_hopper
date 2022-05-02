@@ -4,7 +4,7 @@
 // autoload.php permet de charger d'un coup toutes les dépendances installées avec composer
 // mais aussi d'activer le chargement automatique des classes (convention PSR-4)
 require_once '../backend/vendor/autoload.php';
-
+header('Access-Control-Allow-Origin: http://localhost:3000');  
 session_start();
 
 
