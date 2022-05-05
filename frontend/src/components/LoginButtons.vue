@@ -3,6 +3,7 @@ export default {
     data() {
         return {
             isConnected: false,
+            connected_asAdmin: false,
             username: null
         }
     },
@@ -17,10 +18,19 @@ export default {
                 localStorage.clear();
             }
         },
+        handleConnectionBackO(result) {
+            if(result) {
+                this.isConnectedAdmin = true;
+            }
+        },
     },
     mounted() {
         const username = localStorage.getItem('username');
         const discriminator = localStorage.getItem('discriminator');
+
+        if(localStorage.getItem('connected_asAdmin')) {
+            this.connected_asAdmin = true;
+        }
 
         if(username && discriminator) { // Already connected
             this.handleConnectionDiscord(true);
@@ -85,15 +95,16 @@ function getInfosDiscord(accessToken) {
             </router-link>
         </a>
 
-        <button
-            id="loginAdmin"
-            >Login admin
-        </button>
+        <router-link to="/questions-list">
+            <button v-if="!connected_asAdmin"
+                id="loginAdmin"
+                >Login admin
+            </button>
+
+            <button v-else
+                id="loginAdmin"
+                >Questions list
+            </button>
+        </router-link>
     </section>
 </template>
-
-<style scoped>
-@import '../assets/base.css';
-
-    
-</style>

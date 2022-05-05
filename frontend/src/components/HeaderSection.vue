@@ -10,7 +10,6 @@ export default {
       },
       ifIsUsername(result){
         this.$emit('username', result);
-
       }
     }
 }

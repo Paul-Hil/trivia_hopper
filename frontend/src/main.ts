@@ -5,6 +5,8 @@ import VueAxios from 'vue-axios'
 
 import HomePage from '@/views/HomePage.vue'
 import GamePage from '@/views/GamePage.vue'
+import BackOffice from '@/views/BackOffice.vue'
+
 import App from './App.vue'
 
 const routes = [
@@ -18,6 +20,11 @@ const routes = [
     name: 'game',
     component: GamePage
   },
+  {
+    path: '/questions-list',
+    name: 'questionsList',
+    component: BackOffice
+  }
 ]
 
 const router = createRouter({

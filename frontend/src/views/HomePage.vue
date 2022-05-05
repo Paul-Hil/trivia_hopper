@@ -74,7 +74,7 @@ button:hover {
   padding: 0 2rem;
   font-weight: normal;
   width: 100%;
-  max-width: 50vw;
+  max-width: 60vw;
 }
 
 body {

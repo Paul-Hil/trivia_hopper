@@ -39,6 +39,7 @@ export default {
       this.userResponse = userResponse;
       var goodAnswer = this.questionsList.responses[this.questionNumber];
 
+      console.log(goodAnswer, userResponse);
       if(goodAnswer === userResponse) {
         this.userScore = this.userScore + 1;
       }
@@ -47,6 +48,9 @@ export default {
         this.gameDone = true;
       }
     },
+    reloadPage() {
+      window.location.reload();
+    }
   },
   mounted () {
     axios.get('http://localhost/trivia_v0.1/backend/game')
@@ -56,8 +60,6 @@ export default {
       this.getQuestionsList = true;
     })
     .catch(error => (console.log(error)))
-
-      console.log();
   }
 }
 </script>
@@ -74,13 +76,16 @@ export default {
             <DisplayQuestions 
               :question-display="questionsList.questions[questionNumber]"
               :question-number="questionNumber"
+              :number-of-questions="numberOfQuestions"
               @user-response="checkUserResponse"
               @question-number="ifIsQuestionNumber"
             />
           </div>
 
-          <div v-else>
+          <div id="result" v-else>
+            <h3>Partie terminée</h3>
             <p>Bravo !! Tu as obtenus {{userScore}} bonne réponses sur {{numberOfQuestions}} questions.</p>
+            <button @click="reloadPage">Faire une nouvelle partie</button>
           </div>
         </div>
 
@@ -89,9 +94,14 @@ export default {
 </template>
 
 <style>
-section > div > div > section {
-    margin-top: 15vh;
-    text-align: center;
-    font-size: 1.5vw;
+section#display_question {
+  margin-top: 15vh;
+  text-align: center;
+  font-size: 1.5vw;
+}
+
+div#result {
+  margin-top: 15vh;
+  text-align: center;
 }
 </style>
