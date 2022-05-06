@@ -4,6 +4,7 @@
 // autoload.php permet de charger d'un coup toutes les dépendances installées avec composer
 // mais aussi d'activer le chargement automatique des classes (convention PSR-4)
 require_once '../backend/vendor/autoload.php';
+
 header('Access-Control-Allow-Origin: http://localhost:3000');
 
 /* ------------
@@ -53,6 +54,20 @@ $router->map(
     '/newQuestion',
     'MainController::newQuestion',
     'main-newQuestion'
+);
+
+$router->map(
+    'POST',
+    '/deleteQuestion',
+    'MainController::deleteQuestion',
+    'main-deleteQuestion'
+);
+
+$router->map(
+    'POST',
+    '/editQuestion',
+    'MainController::editQuestion',
+    'main-editQuestion'
 );
 
 $match = $router->match();

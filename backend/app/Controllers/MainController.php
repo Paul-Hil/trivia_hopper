@@ -41,7 +41,7 @@ class MainController
     }
 
     public function newQuestion() {
-        $labelQuestion = $_POST['labelQuestion'];
+        $labelQuestion = $_POST['newQuestionLabel'];
         $response = $_POST['response'];
 
         if($response === 'true') {
@@ -59,6 +59,42 @@ class MainController
             $result = 'Error: argument manquant';
         }
 
-        print_r($result);
+        echo $result;
+    }
+
+    public function deleteQuestion() {
+        $questionId = $_POST['questionId'];
+
+        if($questionId) {
+            $questionsModel = new QuestionsModel;
+            $result = $questionsModel->deleteQuestion($questionId);
+        } else {
+            $result = 'Error: argument manquant';
+        }
+
+        echo $result;
+    }
+
+    public function editQuestion() {
+        $questionId = $_POST['questionId'];
+        $question_label = $_POST['question_label'];
+        $response = $_POST['response'];
+
+        if($response === 'true') {
+            $response = 1;
+        }
+
+        if($response === 'false') {
+            $response = 2;
+        }
+
+        if($questionId && $question_label && $response) {
+            $questionsModel = new QuestionsModel;
+            $result = $questionsModel->editQuestion($questionId, $question_label, $response);
+        } else {
+            $result = 'Error: argument manquant';
+        }
+
+        echo $result;
     }
 }

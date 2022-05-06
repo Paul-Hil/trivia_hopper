@@ -39,7 +39,6 @@ export default {
       this.userResponse = userResponse;
       var goodAnswer = this.questionsList.responses[this.questionNumber];
 
-      console.log(goodAnswer, userResponse);
       if(goodAnswer === userResponse) {
         this.userScore = this.userScore + 1;
       }

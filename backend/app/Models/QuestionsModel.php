@@ -52,6 +52,46 @@ class QuestionsModel {
     
         $result = $pdoStatement->execute();
 
-        return $result;
+        if($result) return json_encode(true);
+        
+        return false;
+    }
+
+    public function deleteQuestion($questionId) {
+
+        $pdo = Database::getPDO();
+
+        $sql = "DELETE FROM `questions`
+        WHERE ((`id` = :questionId));";
+
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindParam(':questionId', $questionId, PDO::PARAM_STR);
+    
+        $result = $pdoStatement->execute();
+
+        if($result) return json_encode(true);
+        
+        return false;
+    }
+
+    public function editQuestion($questionId, $question_label, $response) {
+        $pdo = Database::getPDO();
+
+        $sql = "UPDATE `questions` SET
+        `question` = :questionLabel,
+        `response` = :response,
+        `theme` = NULL
+        WHERE `id` = :questionId;";
+
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindParam(':questionLabel', $question_label, PDO::PARAM_STR);
+        $pdoStatement->bindParam(':response', $response, PDO::PARAM_INT);
+        $pdoStatement->bindParam(':questionId', $questionId, PDO::PARAM_INT);
+    
+        $result = $pdoStatement->execute();
+
+        if($result) return json_encode(true);
+        
+        return false;
     }
 }

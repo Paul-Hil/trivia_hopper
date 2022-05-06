@@ -13,7 +13,6 @@ export default {
     },
     methods: {
       handleResponse(evt) {
-          console.log(evt.currentTarget.className, evt);
           if(evt.currentTarget.className === 'button_true') {
             this.userResponse = "true";
           } else {

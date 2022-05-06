@@ -2,7 +2,6 @@
 <script>
 import axios from 'axios'
 
-
 export default {
     data() {
         return {
@@ -13,19 +12,19 @@ export default {
     methods: {
         checkForm(evt) {
             evt.preventDefault();
-            if(this.newQuestionLabel.length > 8 && this.response) {
+            if(this.newQuestionLabel.length > 8 && this.response || !this.$response) {
                 const formData = new FormData;
 
                 formData.append('newQuestionLabel', this.newQuestionLabel);
-                formData.append('password', this.response);
+                formData.append('response', this.response);
 
                 axios.post('http://localhost/trivia_v0.1/backend/newQuestion', formData)
                 .then(result => {
-                    console.log(result);
-                    if(result === 1) {
+                    if(result.data === true) {
                         this.$emit('addNewQuestion', false);
+                    } else {
+                        console.log("Erreur dans l'ajout de la question");
                     }
-                    console.log("Erreur dans l'ajout de la question");
                 })
                 .catch(error => {
                     console.log(error);
@@ -50,8 +49,8 @@ export default {
 
             }
         },
-        handleReload() {
-            window.location.reload();
+        handleBackButton() {
+            this.$emit('addNewQuestion', false);
         }
     }
 }
@@ -59,7 +58,7 @@ export default {
 
 <template>
     <div>
-        <button @click="handleReload">Go back</button>
+        <button @click="handleBackButton">Go back</button>
 
         <form @submit="checkForm">
             <h2>Ajouter une nouvelle question</h2>

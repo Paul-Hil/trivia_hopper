@@ -3,12 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import App from './App.vue'
+
 import HomePage from '@/views/HomePage.vue'
 import GamePage from '@/views/GamePage.vue'
 import BackOffice from '@/views/BackOffice.vue'
 
-import App from './App.vue'
 
+// Router front
 const routes = [
   {
     path: '/',
@@ -18,7 +20,14 @@ const routes = [
   {
     path: '/game',
     name: 'game',
-    component: GamePage
+    component: GamePage,
+    beforeEnter: (to, from, next) => {
+      if(!localStorage.getItem('accessToken') ) {
+        window.alert('You need to be connected');
+        next({ name: 'Home' });
+      }
+      else next()
+    },
   },
   {
     path: '/questions-list',
