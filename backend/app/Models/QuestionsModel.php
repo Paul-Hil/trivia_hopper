@@ -34,7 +34,7 @@ class QuestionsModel {
         return ($questionsList);
     }
 
-    public static function getNumberOfQuestions() {
+    public static function getNumberMaxOfQuestions() {
         $pdo = Database::getPDO();
 
         $sql = 'SELECT id, question, response_type FROM questions

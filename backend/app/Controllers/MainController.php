@@ -23,9 +23,9 @@ class MainController
         echo json_encode($response);
     }
 
-    public function numberOfQuestions() 
+    public function numberMaxOfQuestions() 
     {
-        $response = QuestionsModel::getNumberOfQuestions();
+        $response = QuestionsModel::getNumberMaxOfQuestions();
         
         echo count($response);
     }

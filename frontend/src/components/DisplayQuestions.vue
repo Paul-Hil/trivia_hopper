@@ -9,12 +9,15 @@ export default {
     data() {
         return {
             userResponse: null,
-            timeLimit: 5000
+            timeLimit: 8000,
+            timeoutId: null,
         }
     },
     methods: {
       handleResponse(evt) {
         this.userResponse = null;
+
+        clearTimeout(this.timeoutId);
 
         if(evt.currentTarget.className === 'button_true') {
             this.userResponse = "true";
@@ -29,12 +32,12 @@ export default {
       },
     },
     mounted() {
-        setTimeout(function() {
+        this.timeoutId = setTimeout(function() {
             this.$emit('questionNumber', this.questionNumber + 1);
         }.bind(this), this.timeLimit);
     },
     updated() {
-        setTimeout(function() {
+        this.timeoutId = setTimeout(function() {
             if(this.questionNumber !== (this.numberOfQuestions - 1)) {
                 this.$emit('questionNumber', this.questionNumber + 1);
             } else {
@@ -52,6 +55,7 @@ export default {
         <p id="label_question">{{questionDisplay}}</p>
         <div id="responses">
             <button class="button_true" @click="handleResponse">Vrai</button>
+            ou
             <button class="button_false" @click="handleResponse">Faux</button>
         </div>
     </section>

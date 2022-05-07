@@ -45,7 +45,7 @@ $router->map(
 $router->map(
     'GET',
     '/numberOfQuestions',
-    'MainController::numberOfQuestions',
+    'MainController::numberMaxOfQuestions',
     'main-numberOfQuestions'
 );
 
