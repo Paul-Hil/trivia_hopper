@@ -9,7 +9,9 @@ class MainController
 {
     public function game() 
     {
-        $response = QuestionsModel::get10Questions();
+        $Nb_QuestionsSelected = $_GET['numberOfQuestions'];
+        $questionModel = new QuestionsModel;
+        $response = $questionModel->getQuestions($Nb_QuestionsSelected);
 
         echo json_encode($response);
     }
@@ -19,6 +21,13 @@ class MainController
         $response = QuestionsModel::getAllQuestions();
 
         echo json_encode($response);
+    }
+
+    public function numberOfQuestions() 
+    {
+        $response = QuestionsModel::getNumberOfQuestions();
+        
+        echo count($response);
     }
 
     public function loginAdmin() {

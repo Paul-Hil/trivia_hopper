@@ -9,18 +9,38 @@ export default {
     data() {
         return {
             userResponse: null,
+            timeLimit: 5000
         }
     },
     methods: {
       handleResponse(evt) {
-          if(evt.currentTarget.className === 'button_true') {
+        this.userResponse = null;
+
+        if(evt.currentTarget.className === 'button_true') {
             this.userResponse = "true";
-          } else {
+        }
+
+        if(evt.currentTarget.className === 'button_false') {
             this.userResponse = "false";
-          }
+        }
+
         this.$emit('userResponse', this.userResponse);
         this.$emit('questionNumber', this.questionNumber + 1);
       },
+    },
+    mounted() {
+        setTimeout(function() {
+            this.$emit('questionNumber', this.questionNumber + 1);
+        }.bind(this), this.timeLimit);
+    },
+    updated() {
+        setTimeout(function() {
+            if(this.questionNumber !== (this.numberOfQuestions - 1)) {
+                this.$emit('questionNumber', this.questionNumber + 1);
+            } else {
+                this.$emit('gameDone', true);
+            }
+        }.bind(this), this.timeLimit);
     }
 }
 </script>
@@ -40,14 +60,6 @@ export default {
 <style scoped lang="scss">
 #label_question {
         color: white;
-}
-
-.class1.class2 {
-
-}
-
-.class1 .class2 {
-    
 }
 
 #responses {

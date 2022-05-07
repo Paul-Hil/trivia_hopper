@@ -15,7 +15,9 @@ export default {
             } else {
                 this.isConnected = false;
                 this.$emit('isConnected', this.isConnected);
-                localStorage.clear();
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('discriminator');
+                localStorage.removeItem('username');
             }
         },
         handleConnectionBackO(result) {

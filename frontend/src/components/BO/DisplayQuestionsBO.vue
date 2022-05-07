@@ -16,9 +16,10 @@ export default {
 
                     axios.post('http://localhost/trivia_v0.1/backend/deleteQuestion', formData)
                     .then(result => {
-                        console.log(result.data);
                         if(result.data === true) {
+                            // this.$router.push("questions-list");
                             window.location.reload();
+
                         } else {
                             console.log("Erreur dans l'ajout de la question");
                         }
@@ -114,7 +115,7 @@ div {
     }
 
     img {
-        width: 4.5vw;
+        width: 50px;
         background-color: rgb(72, 68, 62);
         margin: 5px 0;
         margin-left: 13px;

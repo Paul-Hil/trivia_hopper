@@ -16,8 +16,9 @@ export default {
           questionsList: [],
           questionNumber: 0,
           numberOfQuestions: null,
+          numberOfQuestionSelected: 10,
           userScore: 0,
-          userResponse: null
+          userResponse: null,
       }
   },
   methods: {
@@ -47,12 +48,21 @@ export default {
         this.gameDone = true;
       }
     },
+    checkGameDone() {
+      this.gameDone = true;
+    },
     reloadPage() {
       window.location.reload();
     }
   },
   mounted () {
-    axios.get('http://localhost/trivia_v0.1/backend/game')
+    let numberOfQuestionSelected = this.$route.params.numberOfQuestionSelected;
+
+    if(numberOfQuestionSelected) {
+      this.numberOfQuestionSelected = numberOfQuestionSelected;
+    }
+
+    axios.get('http://localhost/trivia_v0.1/backend/game?numberOfQuestions=' + this.numberOfQuestionSelected)
     .then(response => {
       this.questionsList = (response.data)
       this.numberOfQuestions = response.data.questions.length;
@@ -78,6 +88,7 @@ export default {
               :number-of-questions="numberOfQuestions"
               @user-response="checkUserResponse"
               @question-number="ifIsQuestionNumber"
+              @game-done="checkGameDone"
             />
           </div>
 

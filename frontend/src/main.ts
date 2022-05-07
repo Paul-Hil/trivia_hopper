@@ -21,6 +21,7 @@ const routes = [
     path: '/game',
     name: 'game',
     component: GamePage,
+    
     beforeEnter: (to, from, next) => {
       if(!localStorage.getItem('accessToken') ) {
         window.alert('You need to be connected');

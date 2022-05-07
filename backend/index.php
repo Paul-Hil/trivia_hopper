@@ -43,6 +43,13 @@ $router->map(
 );
 
 $router->map(
+    'GET',
+    '/numberOfQuestions',
+    'MainController::numberOfQuestions',
+    'main-numberOfQuestions'
+);
+
+$router->map(
     'POST',
     '/loginAdmin',
     'MainController::loginAdmin',

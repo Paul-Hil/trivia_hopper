@@ -1,2 +1,13 @@
 frontendold
-/vendor
+bin
+node_modules
+dist
+.cache
+package-lock.json
+package.json
+
+vendor
+wp
+composer.lock
+wp-config.php
+.htaccess

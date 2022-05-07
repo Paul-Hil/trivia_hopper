@@ -11,14 +11,18 @@ class QuestionsModel {
     public $question;
     public $response;
 
-    public static function get10Questions() {
+    public function getQuestions($Nb_QuestionsSelected) {
         $pdo = Database::getPDO();
 
         $sql = 'SELECT id, question, response_type FROM questions
         INNER JOIN response_type ON questions.response = response_type.id_response
-        ORDER BY RAND () LIMIT 10';
+        ORDER BY RAND () LIMIT :Nb_QuestionsSelected';
         
-        $pdoStatement = $pdo->query($sql);
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindParam(':Nb_QuestionsSelected', $Nb_QuestionsSelected, PDO::PARAM_INT);
+        
+        $pdoStatement->execute();
+
         $results = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
 
         $questionsList = [];
@@ -28,6 +32,16 @@ class QuestionsModel {
             $questionsList['responses'][] = $value['response_type'];
         }
         return ($questionsList);
+    }
+
+    public static function getNumberOfQuestions() {
+        $pdo = Database::getPDO();
+
+        $sql = 'SELECT id, question, response_type FROM questions
+        INNER JOIN response_type ON questions.response = response_type.id_response
+        ORDER BY id DESC';
+        
+        return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function getAllQuestions() {

@@ -1,27 +1,58 @@
 <script setup lang="ts">
 import HeaderSection from '@/components/HeaderSection.vue'
 import DiscordLogo from '@/components/DiscordLogo.vue'
+
+import axios from 'axios'
 </script>
 
 <script lang="ts">
 
 export default {
-    data() {
-        return {
-            isConnected: false,
-            username: ""
-        }
-    },
-    methods: {
-      ifIsConnected(result){
-        this.isConnected = result;
-        this.$emit('isConnected', result);
-      },
-      ifIsUsername(result){
-        this.username = result;
-        this.$emit('username', result);
+  data() {
+      return {
+          isConnected: false,
+          username: "",
+          numberTotalOfQuestions: null,
+          numberOfQuestionSelected: 10,
       }
+  },
+  methods: {
+
+    ifIsConnected(result){
+      this.isConnected = result;
+      this.$emit('isConnected', result);
+    },
+
+    ifIsUsername(result){
+      this.username = result;
+      this.$emit('username', result);
+    },
+
+    handleClick() {
+    this.$router.push({
+      name: "game",
+      params: {
+        numberOfQuestionSelected: this.numberOfQuestionSelected,
+      }
+    });
+      // let data = {
+      //   id: 25,
+      //   numberOfQuestionSelected: this.numberOfQuestionSelected,
+      // };
+      
+      // this.$router.push({
+      //   name: "game",
+      //   params: {data}
+      // })
     }
+  },
+  mounted() {
+    axios.get('http://localhost/trivia_v0.1/backend/numberOfQuestions')
+    .then(response => {
+      this.numberTotalOfQuestions = response.data;
+    })
+    .catch(error => (console.log(error)))
+  }
 }
 </script>
 
@@ -29,13 +60,19 @@ export default {
 <template>
     <section>
       <HeaderSection @is-connected="ifIsConnected" @username="ifIsUsername" />
-      
       <main id="game" v-if="isConnected">
         <h2>Welcome back {{this.username}} !</h2>
 
-        <router-link :to="'/game'">
-          <button>Rejoindre une partie</button>
-        </router-link>
+        <button @click="handleClick">Rejoindre une partie</button>
+
+        <form>
+          <label>Nombre de questions (default on 10)</label>
+          <select v-model="numberOfQuestionSelected">
+            <option v-for="n in this.numberTotalOfQuestions" :key="n">
+              {{ n }}
+            </option>
+          </select>
+        </form>
 
         <DiscordLogo :username="this.username"/>
       </main>
@@ -103,6 +140,10 @@ header .wrapper {
 
 .logo {
   margin: 0 2rem 0 0;
+}
+
+select {
+  display: ;
 }
 
 @media only screen and (max-width: 1270px) {
