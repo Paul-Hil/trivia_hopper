@@ -17,11 +17,9 @@ export default {
                     axios.post('http://localhost/trivia_v0.1/backend/deleteQuestion', formData)
                     .then(result => {
                         if(result.data === true) {
-                            // this.$router.push("questions-list");
-                            window.location.reload();
-
+                            this.$emit('forceRerender', true);
                         } else {
-                            console.log("Erreur dans l'ajout de la question");
+                            console.log("Erreur lors de la suppression de la question");
                         }
                     })
                     .catch(error => {
@@ -60,7 +58,7 @@ export default {
                         axios.post('http://localhost/trivia_v0.1/backend/editQuestion', formData)
                         .then(result => {
                             if(result.data === true) {
-                                window.location.reload();
+                                this.$emit('forceRerender', true);
                             } else {
                                 console.log("Erreur lors de la modification de la question");
                             }

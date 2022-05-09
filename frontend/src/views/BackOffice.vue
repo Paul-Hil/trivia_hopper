@@ -12,6 +12,7 @@ export default {
         return {
             isConnected_asAdmin: false,
             addNewQuestion: false,
+            componentKey: 0
         }
     },
     methods: {
@@ -24,6 +25,9 @@ export default {
         handleNewQuestion(value) {
             this.addNewQuestion = value;
         },
+         forceRerender() {
+            this.componentKey += 1;
+        }
     },
     mounted() {
         if(localStorage.getItem('connected_asAdmin')) {
@@ -42,7 +46,7 @@ export default {
 
         <div v-else>
             <div v-if="!addNewQuestion">
-                <QuestionsList @add-new-question="handleNewQuestion"/>
+                <QuestionsList @add-new-question="handleNewQuestion" @force-rerender="forceRerender" :key="componentKey"/>
             </div>
 
             <div v-else>

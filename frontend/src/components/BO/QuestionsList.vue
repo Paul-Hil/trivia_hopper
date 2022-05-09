@@ -15,6 +15,10 @@ export default {
         newQuestion() {
             this.$emit('addNewQuestion', true);
         },
+        forceRerender() {
+          this.$emit('forceRerender', true);
+        }
+        
     },
     mounted() {
         axios.get('http://localhost/trivia_v0.1/backend/questionsList')
@@ -37,7 +41,7 @@ export default {
         </div>
 
         <div v-for="value, index in questionsList" :key="value.id">
-            <DisplayQuestionsBO :question="value"/>
+            <DisplayQuestionsBO :question="value" @force-rerender="forceRerender"/>
         </div>
     </div>
 </template>

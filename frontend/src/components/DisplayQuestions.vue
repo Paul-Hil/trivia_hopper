@@ -1,4 +1,9 @@
+<script setup lang="ts">
+import TimerBar from '@/components/TimerBar.vue'
+</script>
+
 <script lang="ts">
+
 export default {
     props: {
         questionDisplay: String,
@@ -9,14 +14,15 @@ export default {
     data() {
         return {
             userResponse: null,
-            timeLimit: 8000,
+            timeLimit: 7000,
             timeoutId: null,
         }
     },
     methods: {
       handleResponse(evt) {
-        this.userResponse = null;
 
+        this.userResponse = null;
+        this.reset_animation();
         clearTimeout(this.timeoutId);
 
         if(evt.currentTarget.className === 'button_true') {
@@ -30,6 +36,13 @@ export default {
         this.$emit('userResponse', this.userResponse);
         this.$emit('questionNumber', this.questionNumber + 1);
       },
+
+    reset_animation() {
+        var el = document.getElementById('timer_bar');
+        el.style.animation = 'none';
+        el.offsetHeight; /* trigger reflow */
+        el.style.animation = null; 
+    }
     },
     mounted() {
         this.timeoutId = setTimeout(function() {
@@ -58,6 +71,8 @@ export default {
             ou
             <button class="button_false" @click="handleResponse">Faux</button>
         </div>
+        
+        <TimerBar />
     </section>
 </template>
 
