@@ -66,7 +66,7 @@ export default {
         <button @click="handleClick">Rejoindre une partie</button>
 
         <form>
-          <label>Nombre de questions (default on 10)</label>
+          <label>Nombre de questions </label>
           <select v-model="numberOfQuestionSelected">
             <option v-for="n in this.numberTotalOfQuestions" :key="n">
               {{ n }}
@@ -76,6 +76,7 @@ export default {
 
         <DiscordLogo :username="this.username"/>
       </main>
+      <h2 v-else>Connecte toi avec Discord pour commencer à jouer !</h2>
     </section>
 </template>
 
@@ -129,8 +130,14 @@ header {
 h1,h2 {
     margin: 2vw;
     margin-top: none;
+}
 
-  }
+h2 {
+  margin: auto;
+  margin-top: 30%;
+  text-align: center;
+  color: white;
+}
 
 header .wrapper {
   display: flex;
@@ -142,8 +149,9 @@ header .wrapper {
   margin: 0 2rem 0 0;
 }
 
-select {
-  display: ;
+form {
+  color: white;
+  margin: 30px;
 }
 
 @media only screen and (max-width: 1270px) {

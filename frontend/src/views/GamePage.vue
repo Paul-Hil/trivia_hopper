@@ -38,9 +38,8 @@ export default {
 
     checkUserResponse(userResponse){
       this.userResponse = userResponse;
-      var goodAnswer = this.questionsList.responses[this.questionNumber];
 
-      if(goodAnswer === userResponse) {
+      if(this.questionsList.responses[this.questionNumber] === userResponse) {
         this.userScore = this.userScore + 1;
       }
 
@@ -55,6 +54,20 @@ export default {
       window.location.reload();
     }
   },
+  updated() {
+    if(!this.gameDone) {
+      if(this.questionsList && this.userResponse) {
+        if((JSON.stringify(this.questionsList['responses'][this.questionNumber - 1])) === '"'+ this.userResponse + '"') {
+          let sectionScore = document.querySelector('.loop_answer:last-child');
+          sectionScore.querySelector('.answer').classList.remove('wrong_answer');
+          sectionScore.querySelector('.answer').classList.add('correct_answer');
+
+        }
+        this.userResponse = null;
+      }
+    }
+  },
+
   mounted () {
     let numberOfQuestionSelected = this.$route.params.numberOfQuestionSelected;
 
@@ -90,6 +103,12 @@ export default {
               @question-number="ifIsQuestionNumber"
               @game-done="checkGameDone"
             />
+
+            <div id="display_score">
+              <div v-for="numberOf in questionNumber" :key="numberOf" class="loop_answer">
+                  <div class="answer wrong_answer"></div>
+              </div>
+            </div>
           </div>
 
           <div id="result" v-else>
@@ -103,7 +122,35 @@ export default {
     </section>
 </template>
 
-<style>
+<style lang="scss">
+#display_score {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  top: 25%;
+  right: 17%;
+  div {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+  }
+
+  div > div {
+    width: 100%;
+    height: 100%;
+    border: white 3px solid;
+    border-radius: 30px;
+  }
+
+  div.correct_answer {
+    background-color: green;
+  }
+
+  div.wrong_answer {
+    background-color: red;
+  }
+}
+
 section#display_question {
   margin-top: 15vh;
   text-align: center;
