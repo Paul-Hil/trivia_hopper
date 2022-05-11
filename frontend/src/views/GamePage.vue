@@ -126,9 +126,11 @@ export default {
 #display_score {
   display: flex;
   position: fixed;
+  flex-wrap: wrap;
   flex-direction: column;
   top: 25%;
   right: 17%;
+  max-height: 240px ;
   div {
     width: 30px;
     height: 30px;
