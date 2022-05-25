@@ -106,4 +106,22 @@ class MainController
 
         echo $result;
     }
+
+    public function leaderboard() {
+
+        echo  json_encode(QuestionsModel::getLeaderboard());
+    }
+
+    public function addUserScore() {
+        $username = $_POST['username'];
+        $score = $_POST['score'];
+
+        if($username && $score) {
+            $questionModel = new QuestionsModel;
+
+            return $questionModel->addUserScore($username, $score);
+        }
+
+        return false;
+    }
 }

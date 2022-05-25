@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeaderSection from '@/components/HeaderSection.vue'
 import DiscordLogo from '@/components/DiscordLogo.vue'
+import HomeLeaderboard from '@/components/HomeLeaderboard.vue'
 
 import axios from 'axios'
 </script>
@@ -35,15 +36,6 @@ export default {
         numberOfQuestionSelected: this.numberOfQuestionSelected,
       }
     });
-      // let data = {
-      //   id: 25,
-      //   numberOfQuestionSelected: this.numberOfQuestionSelected,
-      // };
-      
-      // this.$router.push({
-      //   name: "game",
-      //   params: {data}
-      // })
     }
   },
   mounted() {
@@ -59,7 +51,7 @@ export default {
 
 <template>
     <section>
-      <HeaderSection @is-connected="ifIsConnected" @username="ifIsUsername" />
+      <HeaderSection @is-connected="ifIsConnected" @username="ifIsUsername" />      
       <main id="game" v-if="isConnected">
         <h2>Welcome back {{this.username}} !</h2>
 
@@ -77,6 +69,8 @@ export default {
         <DiscordLogo :username="this.username"/>
       </main>
       <h2 v-else>Connecte toi avec Discord pour commencer à jouer !</h2>
+
+      <HomeLeaderboard />
     </section>
 </template>
 
@@ -100,7 +94,6 @@ button:hover {
 
 #game {
   text-align: center;
-  margin-top: 25vh;
 }
 
 #app {
@@ -134,7 +127,7 @@ h1,h2 {
 
 h2 {
   margin: auto;
-  margin-top: 30%;
+  margin-top: 10%;
   text-align: center;
   color: white;
 }

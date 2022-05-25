@@ -18,6 +18,7 @@ export default {
           numberOfQuestions: null,
           numberOfQuestionSelected: 10,
           userScore: 0,
+          winrate: 0,
           userResponse: null,
       }
   },
@@ -45,25 +46,47 @@ export default {
 
       if(this.numberOfQuestions === (this.questionNumber + 1)) {
         this.gameDone = true;
+        this.checkWinRate();
       }
     },
+
     checkGameDone() {
       this.gameDone = true;
+      this.checkWinRate();
     },
+
+    checkWinRate() {
+      this.winrate = this.userScore * 100 / this.numberOfQuestions;
+
+      if(this.numberOfQuestions >= 10) {
+        const formData = new FormData;
+
+        formData.append('username', this.username);
+        formData.append('score', this.winrate);
+
+        axios.post('http://localhost/trivia_v0.1/backend/addUserScore', formData)
+      }
+    },
+
     reloadPage() {
       window.location.reload();
     }
   },
   updated() {
     if(!this.gameDone) {
+      
+      let sectionScore = document.querySelector('.loop_answer:last-child');
+
       if(this.questionsList && this.userResponse) {
         if((JSON.stringify(this.questionsList['responses'][this.questionNumber - 1])) === '"'+ this.userResponse + '"') {
-          let sectionScore = document.querySelector('.loop_answer:last-child');
           sectionScore.querySelector('.answer').classList.remove('wrong_answer');
           sectionScore.querySelector('.answer').classList.add('correct_answer');
-
         }
         this.userResponse = null;
+      }
+      else if(this.userResponse === null && this.questionNumber > 0) {
+          sectionScore.querySelector('.answer').classList.remove('wrong_answer');
+          sectionScore.querySelector('.answer').classList.add('time_limit');
       }
     }
   },
@@ -113,7 +136,15 @@ export default {
 
           <div id="result" v-else>
             <h3>Partie terminée</h3>
-            <p>Bravo !! Tu as obtenus {{userScore}} bonne réponses sur {{numberOfQuestions}} questions.</p>
+
+            <div v-if="winrate < 50">
+              <p>Tu peux faire mieux non ?? Tu as obtenus {{winrate}}% de bonne réponses sur {{numberOfQuestions}} questions.</p>
+            </div>
+
+            <div v-else>
+              <p>Bien joué !! Tu as obtenus {{winrate}}% de bonne réponses sur {{numberOfQuestions}} questions.</p>
+            </div>
+
             <button @click="reloadPage">Faire une nouvelle partie</button>
           </div>
         </div>
@@ -150,6 +181,10 @@ export default {
 
   div.wrong_answer {
     background-color: red;
+  }
+
+  div.time_limit {
+    background-color: orange;
   }
 }
 

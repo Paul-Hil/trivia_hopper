@@ -50,6 +50,20 @@ $router->map(
 );
 
 $router->map(
+    'GET',
+    '/leaderboard',
+    'MainController::leaderboard',
+    'main-leaderboard'
+);
+
+$router->map(
+    'POST',
+    '/addUserScore',
+    'MainController::addUserScore',
+    'main-addUserScore'
+);
+
+$router->map(
     'POST',
     '/loginAdmin',
     'MainController::loginAdmin',
@@ -76,7 +90,6 @@ $router->map(
     'MainController::editQuestion',
     'main-editQuestion'
 );
-
 $match = $router->match();
 
 // Ensuite, pour dispatcher le code dans la bonne méthode, du bon Controller

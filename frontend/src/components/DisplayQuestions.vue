@@ -23,6 +23,7 @@ export default {
 
         this.userResponse = null;
         this.reset_animation();
+        
         clearTimeout(this.timeoutId);
 
         if(evt.currentTarget.className === 'button_true') {

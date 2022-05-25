@@ -11,6 +11,7 @@ class QuestionsModel {
     public $question;
     public $response;
 
+
     public function getQuestions($Nb_QuestionsSelected) {
         $pdo = Database::getPDO();
 
@@ -42,6 +43,32 @@ class QuestionsModel {
         ORDER BY id DESC';
         
         return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getLeaderboard() {
+        $pdo = Database::getPDO();
+        $sql = 'SELECT * FROM `scoreboard` ORDER BY `score` DESC LIMIT 10';
+
+        return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addUserScore($username, $score) {
+        $pdo = Database::getPDO();
+
+        $sql = "INSERT INTO `scoreboard` (`username`, `score`)
+        VALUES (:username, :score);";
+
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindParam(':username', $username, PDO::PARAM_STR);
+        $pdoStatement->bindParam(':score', $score, PDO::PARAM_INT);
+
+    
+        $result = $pdoStatement->execute();
+
+        if($result) return json_encode(true);
+        
+        return false;
+
     }
 
     public static function getAllQuestions() {
