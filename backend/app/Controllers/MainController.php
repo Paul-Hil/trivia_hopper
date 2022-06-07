@@ -119,7 +119,11 @@ class MainController
         if($username && $score) {
             $questionModel = new QuestionsModel;
 
-            return $questionModel->addUserScore($username, $score);
+            if($questionModel->addUserScore($username, $score)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         return false;

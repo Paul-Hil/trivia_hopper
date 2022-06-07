@@ -47,27 +47,52 @@ class QuestionsModel {
 
     public static function getLeaderboard() {
         $pdo = Database::getPDO();
-        $sql = 'SELECT * FROM `scoreboard` ORDER BY `score` DESC LIMIT 10';
+
+        $sql = "SELECT username, score
+        FROM users
+        INNER JOIN scoreboard ON users.id = scoreboard.user_id
+        ORDER BY `score` DESC LIMIT 10";
 
         return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function addUserScore($username, $score) {
+
         $pdo = Database::getPDO();
 
-        $sql = "INSERT INTO `scoreboard` (`username`, `score`)
-        VALUES (:username, :score);";
+        // Ajout de l'utilisateur
+        $sql = "INSERT INTO `users` (`username`)
+        VALUES (:username);";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindParam(':username', $username, PDO::PARAM_STR);
+        $pdoStatement->execute();
+
+
+        // Récupère son ID
+        $sql = "SELECT id FROM users WHERE username = :username";
 
         $pdoStatement = $pdo->prepare($sql);
         $pdoStatement->bindParam(':username', $username, PDO::PARAM_STR);
+        
+        $pdoStatement->execute();
+
+        $user_id = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+
+        // Ajout du score
+        $sql = "INSERT INTO `scoreboard` (`user_id`, `score`)
+        VALUES (:user_id, :score);";
+
+        $pdoStatement = $pdo->prepare($sql);
+
+        $pdoStatement->bindParam(':user_id', $user_id['id'], PDO::PARAM_INT);
         $pdoStatement->bindParam(':score', $score, PDO::PARAM_INT);
 
-    
         $result = $pdoStatement->execute();
 
-        if($result) return json_encode(true);
-        
-        return false;
+        return $result;
+
 
     }
 

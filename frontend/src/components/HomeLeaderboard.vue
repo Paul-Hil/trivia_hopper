@@ -21,13 +21,13 @@ export default {
     <section>
         <h2>Leaderboard</h2>
         <div class="leaderboard">
-            <div>Username</div> 
+            <div class="leaderboard_username">Username</div> 
                     
             <div>Score %</div>
         </div>
 
         <div class="leaderboard" v-if="leaderboard" v-for="item in leaderboard" key="item.id">
-            <div>{{item.username}}</div> 
+            <div class="leaderboard_username">{{item.username}}</div> 
                     
             <div>{{item.score}}</div>
         </div>
@@ -57,6 +57,10 @@ section  {
         border: solid white 2px;
         border-right: none;
         border-left: none;
+
+        div.leaderboard_username {
+            border-right: solid 2px white;
+        }
     }
 
     .leaderboard:nth-of-type(even) {
