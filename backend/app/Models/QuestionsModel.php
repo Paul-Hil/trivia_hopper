@@ -79,21 +79,47 @@ class QuestionsModel {
         $pdoStatement->execute();
 
         $user_id = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+        $user_id = $user_id['id'];
 
-        // Ajout du score
-        $sql = "INSERT INTO `scoreboard` (`user_id`, `score`)
-        VALUES (:user_id, :score);";
+        if($user_id) {
+            $sql = "SELECT score FROM scoreboard WHERE user_id = :user_id";
 
-        $pdoStatement = $pdo->prepare($sql);
+            $pdoStatement = $pdo->prepare($sql);
+            $pdoStatement->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            
+            $pdoStatement->execute();
+    
+            $old_score = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+            $old_score = $old_score['score'];
 
-        $pdoStatement->bindParam(':user_id', $user_id['id'], PDO::PARAM_INT);
-        $pdoStatement->bindParam(':score', $score, PDO::PARAM_INT);
+            $sql = false;
 
-        $result = $pdoStatement->execute();
+            // Si pas d'ancien score trouvé
+            if(!$old_score) {
+                $sql = "INSERT INTO `scoreboard` (`user_id`, `score`)
+                    VALUES (:user_id, :score);";
+            }
 
-        return $result;
+            // Ajout du nouveau score si supérieur au précédent
+            else if($old_score && $score > $old_score) {
+                $sql = "DELETE FROM `scoreboard`
+                    WHERE ((user_id = :user_id));
 
+                    INSERT INTO `scoreboard` (`user_id`, `score`)
+                    VALUES (:user_id, :score);";
+            }
 
+            if($sql) {
+                $pdoStatement = $pdo->prepare($sql);
+    
+                $pdoStatement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                $pdoStatement->bindParam(':score', $score, PDO::PARAM_INT);
+    
+                $result = $pdoStatement->execute();
+    
+                return $result;
+            }
+        }
     }
 
     public static function getAllQuestions() {
