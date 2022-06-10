@@ -17,7 +17,7 @@ export default {
             formData.append('password', this.password);
 
             if(this.username && this.username.length >= 5 && this.password && this.password.length >= 5) {
-                axios.post('http://localhost/trivia_v0.1/backend/loginAdmin', formData)
+                axios.post('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/loginAdmin', formData)
                 .then(response => {
                     if(response.data === true) {
                         this.$emit('isConnected_asAdmin', response.data);

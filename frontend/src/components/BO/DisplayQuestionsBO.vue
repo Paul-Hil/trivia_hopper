@@ -14,7 +14,7 @@ export default {
                     const formData = new FormData;
                     formData.append('questionId', question_id);
 
-                    axios.post('http://localhost/trivia_v0.1/backend/deleteQuestion', formData)
+                    axios.post('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/deleteQuestion', formData)
                     .then(result => {
                         if(result.data === true) {
                             this.$emit('forceRerender', true);
@@ -55,7 +55,7 @@ export default {
                         formData.append('question_label', question_label_edit);
                         formData.append('response', response_edit);
 
-                        axios.post('http://localhost/trivia_v0.1/backend/editQuestion', formData)
+                        axios.post('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/editQuestion', formData)
                         .then(result => {
                             if(result.data === true) {
                                 this.$emit('forceRerender', true);

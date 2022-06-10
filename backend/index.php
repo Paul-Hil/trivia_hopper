@@ -5,7 +5,7 @@
 // mais aussi d'activer le chargement automatique des classes (convention PSR-4)
 require_once '../backend/vendor/autoload.php';
 
-header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Origin: https://trivia-hopper.surge.sh');
 
 /* ------------
 --- ROUTAGE ---

@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost/trivia_v0.1/backend/numberOfQuestions')
+    axios.get('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/numberOfQuestions')
     .then(response => {
       this.numberTotalOfQuestions = response.data;
     })
@@ -61,7 +61,7 @@ export default {
         <form>
           <label>Nombre de questions </label>
           <select v-model="numberOfQuestionSelected" v-if="numberTotalOfQuestions">
-            <option v-for="n in this.numberTotalOfQuestions" :key="n">
+            <option v-for="n in numberTotalOfQuestions" :key="n">
               {{ n }}
             </option>
           </select>

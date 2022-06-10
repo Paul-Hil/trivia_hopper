@@ -9,7 +9,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost/trivia_v0.1/backend/leaderboard')
+        axios.get('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/leaderboard')
         .then(response => {
             this.leaderboard = response.data;
         })
