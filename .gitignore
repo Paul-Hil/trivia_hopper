@@ -1,10 +1,8 @@
-frontendold
 bin
 node_modules
 dist
 .cache
 package-lock.json
-package.json
 config.ini
 
 vendor

@@ -21,12 +21,12 @@ export default {
 
     ifIsConnected(result){
       this.isConnected = result;
-      this.$emit('isConnected', result);
     },
 
     ifIsUsername(result){
+      console.log(result);
       this.username = result;
-      this.$emit('username', result);
+      this.isConnected = true;
     },
 
     handleClick() {
@@ -51,22 +51,23 @@ export default {
 
 <template>
     <section>
-      <HeaderSection @is-connected="ifIsConnected" @username="ifIsUsername" />      
-      <main id="game" v-if="isConnected">
-        <h2>Welcome back {{this.username}} !</h2>
+      <HeaderSection @is-connected="ifIsConnected" @username="ifIsUsername" />
+
+      <main id="game" v-if="username">
+        <h2>Welcome back {{username}} !</h2>
 
         <button @click="handleClick">Rejoindre une partie</button>
 
         <form>
           <label>Nombre de questions </label>
-          <select v-model="numberOfQuestionSelected">
+          <select v-model="numberOfQuestionSelected" v-if="numberTotalOfQuestions">
             <option v-for="n in this.numberTotalOfQuestions" :key="n">
               {{ n }}
             </option>
           </select>
         </form>
 
-        <DiscordLogo :username="this.username"/>
+        <DiscordLogo v-if="username" :username="username"/>
       </main>
       <h2 v-else>Connecte toi avec Discord pour commencer à jouer !</h2>
 

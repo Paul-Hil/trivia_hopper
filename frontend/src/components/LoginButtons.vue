@@ -81,7 +81,7 @@ function getInfosDiscord(accessToken) {
 
 <template>
     <section>
-        <a v-if="!isConnected" href="https://discord.com/api/oauth2/authorize?client_id=959861766836322375&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=token&scope=identify">
+        <a v-if="!isConnected" href="https://discord.com/api/oauth2/authorize?client_id=959858252198338570&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=token&scope=identify">
             <button
             @click="$emit(this.username)"
                 >Login with Discord
