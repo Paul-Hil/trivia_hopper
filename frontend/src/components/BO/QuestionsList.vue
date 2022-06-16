@@ -60,7 +60,7 @@ div#questionsList {
     margin-top: 30px;
     display: grid;
     grid-template-columns: 6% 70% 10% 16%;
-    grid-template-rows: 5% 1fr;
+    grid-template-rows: 1fr;
     text-align: center;
     span {
         padding: 5px;
