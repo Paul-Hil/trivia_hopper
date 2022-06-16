@@ -64,7 +64,7 @@ export default {
         formData.append('username', this.username);
         formData.append('score', this.winrate);
 
-        axios.post('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/addUserScore', formData)
+        axios.post('https://triviahopperapi.xyz/trivia_hopper/backend/addUserScore', formData)
       }
     },
 
@@ -98,7 +98,7 @@ export default {
       this.numberOfQuestionSelected = numberOfQuestionSelected;
     }
 
-    axios.get('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/game?numberOfQuestions=' + this.numberOfQuestionSelected)
+    axios.get('https://triviahopperapi.xyz/trivia_hopper/backend/game?numberOfQuestions=' + this.numberOfQuestionSelected)
     .then(response => {
       this.questionsList = (response.data)
       this.numberOfQuestions = response.data.questions.length;

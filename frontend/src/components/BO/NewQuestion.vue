@@ -18,7 +18,7 @@ export default {
                 formData.append('newQuestionLabel', this.newQuestionLabel);
                 formData.append('response', this.response);
 
-                axios.post('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/newQuestion', formData)
+                axios.post('https://triviahopperapi.xyz/trivia_hopper/backend/newQuestion', formData)
                 .then(result => {
                     if(result.data === true) {
                         this.$emit('addNewQuestion', false);

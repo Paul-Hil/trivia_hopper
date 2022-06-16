@@ -24,7 +24,6 @@ export default {
     },
 
     ifIsUsername(result){
-      console.log(result);
       this.username = result;
       this.isConnected = true;
     },
@@ -39,7 +38,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/numberOfQuestions')
+    axios.get('https://triviahopperapi.xyz/trivia_hopper/backend/numberOfQuestions')
     .then(response => {
       this.numberTotalOfQuestions = response.data;
     })

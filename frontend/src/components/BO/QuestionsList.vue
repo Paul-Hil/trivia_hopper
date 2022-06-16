@@ -21,7 +21,7 @@ export default {
         
     },
     mounted() {
-        axios.get('http://ec2-18-118-212-205.us-east-2.compute.amazonaws.com/trivia_hopper/backend/questionsList')
+        axios.get('https://triviahopperapi.xyz/trivia_hopper/backend/questionsList')
         .then(response => {
             this.getQuestionsList = true;
             this.questionsList = response.data;

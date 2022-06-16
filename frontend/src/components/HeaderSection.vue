@@ -9,7 +9,6 @@ export default {
         this.$emit('isConnected', result);
       },
       ifIsUsername(result){
-        console.log('InFunction' + result); 
         this.$emit('username', result);
       }
     }
